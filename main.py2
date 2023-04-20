@@ -5,9 +5,13 @@ if condition == True:
   print("The condition was true")
 elif name == "Roberto":
   print("Hello Roberto")
-elif name == "Mari":
-  print("Hello Mari")
-elif name == "Marcos":
-  print("Hello Marcos")
+elif name == "Steve":
+  print("Hello Steve")
+elif name == "Carlos":
+  print("Hello Carlos")
+elif name == "Hasan":
+  print("Hello Hasan")
+elif name == "Bailey":
+  print("Hello Bailey")
 else:
   print("The condition was false")
