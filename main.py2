@@ -1,0 +1,13 @@
+condition = False
+name = "Roberto"
+
+if condition == True:
+  print("The condition was true")
+elif name == "Roberto":
+  print("Hello Roberto")
+elif name == "Mari":
+  print("Hello Mari")
+elif name == "Marcos":
+  print("Hello Marcos")
+else:
+  print("The condition was false")
