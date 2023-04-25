@@ -1,0 +1,15 @@
+# Decorators
+
+def longtime(func):
+    def wrapper():
+      print("good morning")
+      val = func()
+      print("good night")
+      return val
+    return wrapper
+
+@longtime
+def goodafternoon():
+    print("good afernoon")
+
+goodafternoon()
