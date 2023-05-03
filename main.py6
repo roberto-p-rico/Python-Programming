@@ -1,366 +1,482 @@
-import random
+import random,sys,time,os,re
+update="""
 
-class UnoCard:
-    '''represents an Uno card'''
+│ MANY "fixes"                                                           │
+│   - made code not pain inducing to look at                             |
+|     (mostly jk literally barely at all)                                │
+│   - fixed a random typo in a comment and added a lot more comments     │
+│   - overall polished some stuff                                        │
+|   - you can tell idk what to say anymore, made this unprintable??      |
+|   - a cool secret for you code diggers i guess...                      |
+"""
 
-    def __init__(self,rank,color):
-        '''UnoCard(rank,color) -> UnoCard
-        creates an Uno card with the given rank and color'''
-        self.rank = rank
-        self.color = color
+"--------------Hey you------------"
 
-    def __str__(self):
-        '''str(Unocard) -> str'''
-        if self.rank in ['wild','wild draw four']:
-            return self.rank
-        return(str(self.color)+' '+str(self.rank))
+from graphics import *
+def clearline():
+ sys.stdout.write('\x1b[1A')
+ sys.stdout.write('\x1b[2K')
+print('\033[?25l')
+tyforthat2=True
+dicts={
+ 'Red 1':["Red",1],'Blue 1':["Blue",1],
+ 'Red 2':["Red",2],'Blue 2':["Blue",2],
+ 'Red 3':["Red",3],'Blue 3':["Blue",3],
+ 'Red 4':["Red",4],'Blue 4':["Blue",4],
+ 'Red 5':["Red",5],'Blue 5':["Blue",5],
+ 'Red 6':["Red",6],'Blue 6':["Blue",6],
+ 'Red 7':["Red",7],'Blue 7':["Blue",7],
+ 'Red 8':["Red",8],'Blue 8':["Blue",8],
+ 'Red 9':["Red",9],'Blue 9':["Blue",9],
+ 'Red 0':["Red",0],'Blue 0':["Blue",0],
+ 'Yellow 1':["Yellow",1],'Green 1':["Green",1],
+ 'Yellow 2':["Yellow",2],'Green 2':["Green",2],
+ 'Yellow 3':["Yellow",3],'Green 3':["Green",3],
+ 'Yellow 4':["Yellow",4],'Green 4':["Green",4],
+ 'Yellow 5':["Yellow",5],'Green 5':["Green",5],
+ 'Yellow 6':["Yellow",6],'Green 6':["Green",6],
+ 'Yellow 7':["Yellow",7],'Green 7':["Green",7],
+ 'Yellow 8':["Yellow",8],'Green 8':["Green",8],
+ 'Yellow 9':["Yellow",9],'Green 9':["Green",9],
+ 'Yellow 0':["Yellow",0],'Green 0':["Green",0],
+ '+4 Card':['All','/','+4'],'Wild Card':['All','/','W'],
+ "Green +2 Card":["Green",'+2'],"Yellow +2 Card":["Yellow",'+2'],
+ "Red +2 Card":["Red",'+2'],"Blue +2 Card":["Blue",'+2'],
+ "Red Reverse Card":["Red",'R'],"Blue Reverse Card":["Blue","R"],
+ "Green Reverse Card":["Green",'R'],"Yellow Reverse Card":["Yellow","R"],
+ "Red Skip Card":["Red",'S'],"Yellow Skip Card":["Yellow",'S'],
+ "Green Skip Card":["Green",'S'],"Blue Skip Card":["Blue","S"]
+}
+'''
+ALL STUFF I MEANT TO ADD BUT NOW JUST TAKES UP SPACE AND WOULD KILL CPU ON REPL??
+keyz='' #what key you last pressed
+afk=True #if we are waiting for a key press
+def skipem(): #the main key thread
+  global keyz,afk
+  while True:
+    afk=True
+    keyz=getkey()
+    afk=False
+    time.sleep(.1) #so nothing weird happens?
+no_pain=Thread(target=skipem)
+no_pain.start() #operation no pain is a fail :( 
+'''
+nowait=False
+def printt(thingggg,dela=.04):
+ if not nowait:
+   for i in thingggg:
+     sys.stdout.write(i)
+     sys.stdout.flush()
+     time.sleep(dela)
+   print("")
+ else:
+   print(thingggg)
+def sprintt(tex,mod=1):
+  sys.stdout.write(f"\033[H\x1b[{mod+1}B\x1b[22C")
+  sys.stdout.write(" "*16+"\x1b[1B\x1b[16D"+(" "*16)+"\x1b[16D\x1b[1A" if mod==1 else "")
+  printt(tex)
+hasseen=False
+def shop():
+  global hasseen
+  shopkeep='''
+                     ┌────────────────┐
+     /―――――――\\       |                |
+     │ ⎞   ⎞ │       |                |
+     │  ___  │       └────────────────┘
+     \\―――――――/     
+      │     │
+┌─────────────────┐
+│   ◌         ◌   │
+│                 │
 
-    def is_match(self,other):
-        '''UnoCard.is_match(UnoCard) -> boolean
-        returns True if the cards match in rank or color, False if not.
-        wild cards match everything'''
-        return (self.color == other.color) or (self.rank == other.rank) \
-               or (self.rank == 'wild') or (other.rank == 'wild') \
-               or (self.rank == 'wild draw four') or (other.rank == 'wild draw four')
+'''
+  if not hasseen:
+    hasseen=True
+    gods=list(range(5,16))+list(range(45,56))+list(range(84,95))+list(range(124,135))
+    for ind,i in enumerate(shopkeep[40:]):
+      print("-" if i=='⎞' else i if ind in gods or i in ['\n',' '] or ind>128 else " ",end='')
+    time.sleep(2)
+    os.system('clear')
+    print(shopkeep)
+    for ind,i in enumerate(["   hey youre","  still here?","  well, thanks","for seeing this","  making games","is fr fun to me",\
+  "    and when",'people play them',"it gives meaning","  to the game",'the only reason','i even made some','was since people','  enjoyed them','lately ive been',' working on one',"\033[01m      the\033[0m","\033[01m     truth\033[0m","  but i wanted","to kinda say bye"," at least from",' updating this',"most of my time"," ill spend on:",'either the truth','or just irl life','  so thank you',' for playing :)','and while youre',' here, \033[01ma secret\033[0m','  in the intro','   enter "H"','btw my main game','  is on github',' if you want to',' play it so yea','  feel free to','steal this game',' and have fun :)']):
+      if ind==2:
+        print("\033[H"+shopkeep[:129]+" __"+shopkeep[132:])
+      sprintt(i,1 if ind%2==0 else 2)
+      time.sleep(0 if ind%2==0 else 3)
+    time.sleep(2)
+    print("\n"*8+"Thank you for playing!")
+  else:
+    print("hey again\n\nthis project was pretty much the reason i kept making games as well, so many people liked it and it was just a random idea i had, to recreate uno\ni couldn't really fit everything in that little text box, but really thank you even if youre just randomly playing this\njust people running my code like feels cool idk\ni probably wont ever update this or any repl project again, as repl killed the python cpu somehow\nmy friend, lucas, plays my game a lot though, so on github ill be releasing updates and stuff for my big game,\033[01mthe truth\033[0m\nother than that, enjoy uno :)\nand feel free to steal any other games ive made on my profile, like 2048, a 'bot' with commands, connect 4, and even some shooter things\n\n\033[38;5;4myou are cool\033[0m\n")
+  anykey(True)
+def anykey(HE=False):
+  if nowait or HE:
+    input("\n\033[38;5;29m[Enter to continue]\033[0m")
+  clear()
+def slep(amo,mod='hi i hope youre having a nice day'):
+  if nowait:
+    if mod=='f':
+      anykey()
+  else:
+    time.sleep(amo)
+def clear():
+ os.system('clear')
+pattern=re.compile('\x1b+\[+3+[0-9]+m+')
+def normconvert(a690):
+ return pattern.sub("",a690)
 
-    def is_color_match(self,other):
-        '''UnoCard.is_color_match(UnoCard) -> boolean
-        returns True if colors match, False otherwise'''
-        return (self.color == other.color)
-
-    def get_rank(self):
-        '''UnoCard.get_action() -> str
-        returns the rank of the card'''
-        return self.rank
-
-class UnoDeck:
-    '''represents a deck of Uno cards'''
-
-    def __init__(self):
-        '''UnoDeck() -> UnoDeck
-        creates a new full Uno deck'''
-        self.deck = []
-        for color in ['red', 'blue', 'green', 'yellow']:
-            self.deck.append(UnoCard(0,color))  # one 0 of each color
-            for i in range(2):
-                for n in range(1,10):  # two of each of 1-9 of each color
-                    self.deck.append(UnoCard(n,color))
-                for action in ['skip','reverse','draw two']:
-                    self.deck.append(UnoCard(action,color))
-        # wild cards
-        for i in range(4):
-            self.deck.append(UnoCard('wild',''))
-            self.deck.append(UnoCard('wild draw four',''))
-        random.shuffle(self.deck)  # shuffle the deck
-
-    def __str__(self):
-        '''str(Unodeck) -> str'''
-        return 'An Uno deck with '+str(len(self.deck))+' cards remaining.'
-
-    def is_empty(self):
-        '''UnoDeck.is_empty() -> boolean
-        returns True if the deck is empty, False otherwise'''
-        return len(self.deck) == 0
-
-    def deal_card(self):
-        '''UnoDeck.deal_card() -> UnoCard
-        deals a card from the deck and returns it
-        (the dealt card is removed from the deck)'''
-        return self.deck.pop()  # deal from the "bottom"
-
-    def reset_deck(self,pile):
-        '''UnoDeck.reset_deck(pile)
-        resets the deck from the pile'''
-        self.deck = pile.reset_pile() # get cards from the pile
-        random.shuffle(self.deck)  # shuffle the deck
-
-class UnoPile:
-    '''represents the discard pile in Uno'''
-
-    def __init__(self,deck):
-        '''UnoPile(deck) -> UnoPile
-        creates a new pile by drawing a card from the deck'''
-        card = deck.deal_card()
-        self.pile = [card]  # all the cards in the pile
-        self.top = card     # the top card in the pile
-        self.wildcolor = None  # placeholder for wild card color
-
-    def __str__(self):
-        '''str(UnoPile) -> str'''
-        output = 'The pile has '+str(self.top)+' on top.'
-        if self.wildcolor != None:
-            output += '\n'+self.wildcolor+' has been specified.'
-        return output
-
-    def add_card(self,card):
-        '''UnoPile.add_card(card)
-        adds the card to the top of the pile'''
-        self.pile.append(card)
-        self.top = card   # sets the card to be on top
-
-    def top_card(self):
-        '''UnoPile.top_card() -> UnoCard
-        returns the top card in the pile'''
-        if self.wildcolor == None:
-            return self.top
-        else:
-            return UnoCard(-1,self.wildcolor)
-
-    def set_wild_color(self,color):
-        '''UnoPile.set_wild_color(color)
-        sets the wild card color'''
-        self.wildcolor = color
-
-    def clear_wild_color(self):
-        '''UnoPile.clear_wild_color(color)
-        clears the wild card color'''
-        self.wildcolor = None
-
-    def reset_pile(self):
-        '''UnoPile.reset_pile() -> list
-        removes all but the top card from the pile and
-          returns the rest of the cards as a list of UnoCards'''
-        newdeck = self.pile[:-1]
-        self.pile = [self.top]
-        return newdeck
-
-class UnoPlayer:
-    '''represents a player of Uno'''
-
-    def __init__(self,name,isHuman,deck):
-        '''UnoPlayer(name,isHuman,deck -> UnoPlayer
-        creates a new player with an new hand'''
-        self.name = name
-        self.isHuman = isHuman
-        if not isHuman:
-            self.name += '(Computer)'
-        self.hand = [deck.deal_card() for i in range(7)]
-
-    def __str__(self):
-        '''str(UnoPlayer) -> UnoPlayer'''
-        return str(self.name)+' has '+str(len(self.hand))+' cards.'
-
-    def is_human(self):
-        '''UnoPlayer.is_human() -> bool
-        returns True if human, False if computer'''
-        return self.isHuman
-
-    def get_name(self):
-        '''UnoPlayer.get_name() -> str
-        returns the player's name'''
-        return self.name
-
-    def get_hand(self):
-        '''get_hand(self) -> str
-        returns a string representation of the hand, one card per line'''
-        output = ''
-        for card in self.hand:
-            output += '  ' + str(card) + '\n'
-        return output
-
-    def has_won(self):
-        '''UnoPlayer.has_won() -> boolean
-        returns True if the player's hand is empty (player has won)'''
-        return len(self.hand) == 0
-
-    def draw_card(self,deck):
-        '''UnoPlayer.draw_card(deck) -> UnoCard
-        draws a card, adds to the player's hand
-          and returns the card drawn'''
-        card = deck.deal_card()  # get card from the deck
-        self.hand.append(card)   # add this card to the hand
-        return card
-
-    def play_card(self,card,pile):
-        '''UnoPlayer.play_card(card,pile)
-        plays a card from the player's hand to the pile
-        CAUTION: does not check if the play is legal!'''
-        self.hand.remove(card)
-        pile.add_card(card)
-        # get player's choice of color for a wild card
-        if card.get_rank() in ['wild','wild draw four']:
-            if self.isHuman:  # humans get to choose
-                print('What color do you choose?')
-                colorChoice = ''
-                while colorChoice not in ['red','blue','yellow','green']:
-                    colorChoice = input('Pick one of red, blue, yellow, or green: ')
-            else:  # computer player picks at random
-                colorChoice = random.choice(['red','blue','yellow','green'])
-            pile.set_wild_color(colorChoice)
-        else:
-            pile.clear_wild_color()
-
-    def take_turn(self,deck,pile):
-        '''UnoPlayer.take_turn(deck,pile) -> str
-        takes the player's turn in the game
-          deck is an UnoDeck representing the current deck
-          pile is an UnoPile representing the discard pile
-        returns rank of card played'''
-        # print player info
-        print(self.name+", it's your turn.")
-        print(pile)
-        if self.isHuman:  # only show hand to human player
-            print("Your hand: ")
-            print(self.get_hand())
-        else:
-            input("Press enter for the computer to play.")
-        # get a list of cards that can be played
-        topcard = pile.top_card()
-        # draw four can only be played if there's no matching color card
-        drawFourOK = (len([card for card in self.hand if \
-                           card.is_color_match(topcard)]) == 0)
-        # collect matches -- check for wild draw four playability
-        matches = [card for card in self.hand if card.is_match(topcard) \
-                   and (card.rank != 'wild draw four' or drawFourOK)]
-        if len(matches) > 0:  # can play
-            if self.isHuman:  # let the human select
-                counter = 1   # to number the cards that can be played
-                print("These cards can be played:")
-                for card in matches:
-                    # print the playable cards with their number
-                    print(str(counter)+": "+str(card))
-                    counter += 1
-                # get player's choice of which card to play
-                choice = 0
-                while choice < 1 or choice > len(matches):
-                    choicestr = input("Which do you want to play? ")
-                    if choicestr.isdigit():
-                        choice = int(choicestr)
-            else:  # computer player, pick a random card
-                choice = random.randrange(1,len(matches)+1)
-            # play the chosen card from hand, add it to the pile
-            chosencard = matches[choice-1]
-            if not self.isHuman:  # print the computer's chosen card
-                print(self.name+" plays "+str(chosencard))
-            self.play_card(chosencard,pile)
-            return chosencard.get_rank()
-        else:  # can't play
-            if self.isHuman:
-                print("You can't play, so you have to draw.")
-                input("Press enter to draw.")
-            else:
-                print(self.name+" can't play and must draw.")
-            # check if deck is empty -- if so, reset it
-            if deck.is_empty():
-                deck.reset_deck(pile)
-            # draw a new card from the deck
-            newcard = self.draw_card(deck)
-            if self.isHuman:
-                print("You drew: "+str(newcard))
-            if newcard.is_match(topcard): # can be played
-                print("The drawn card can be played")
-                self.play_card(newcard,pile)
-                return newcard.get_rank()
-            else:   # still can't play
-                print("Still can't play.")
-                return None
-            input("Press enter to continue.")
-
-def play_uno(numPlayers):
-    '''play_uno(numPlayers)
-    plays a game of Uno
-    numPlayers is an int for the number of players'''
-    # set up full deck and initial discard pile
-    deck = UnoDeck()
-    pile = UnoPile(deck)
-    # set up the players
-    playerList = []
-    for n in range(numPlayers):
-        # get each player's name, then create an UnoPlayer
-        name = input('Player #'+str(n+1)+', enter your name: ')
-        computerPlayer = 'x'
-        while computerPlayer not in 'yn':
-            computerPlayer = input('Is this a computer player (y/n)? ')
-        playerList.append(UnoPlayer(name,computerPlayer=='n',deck))
-    # randomly assign who deals
-    currentPlayerNum = random.randrange(numPlayers)
-    print(playerList[currentPlayerNum].get_name()+" is the dealer.")
-    # set up direction (for reversing)
-    direction = 1
-    # first card actions
-    firstCardAction = pile.top_card().get_rank()
-    while firstCardAction == 'wild draw four':
-        # draw another card
-        pile.add_card(deck.deal_card())
-        firstCardAction = pile.top_card().get_rank()
-    print("The initial card on the pile is: "+str(pile.top_card()))
-    if firstCardAction == 'skip':
-        currentPlayerNum = (currentPlayerNum + direction) % numPlayers
-        print(playerList[currentPlayerNum].get_name()+" gets skipped!")
-    elif firstCardAction == 'reverse':
-        print("Reverse direction!")
-        direction *= -1
-    elif firstCardAction == 'draw two':
-        currentPlayerNum = (currentPlayerNum + direction) % numPlayers
-        print(playerList[currentPlayerNum].get_name()+" must draw 2!")
-        input("Press enter to draw.")
-        for i in range(2):
-            # check if deck is empty -- if so, reset it
-            if deck.is_empty():
-                deck.reset_deck(pile)
-            # draw a new card from the deck
-            newcard = playerList[currentPlayerNum].draw_card(deck)
-            if playerList[currentPlayerNum].is_human():
-                print("You drew: "+str(newcard))
-    elif firstCardAction == 'wild':
-        # get player's choice of color for a wild card
-        if playerList[currentPlayerNum].is_human():  # humans get to choose
-            print('What color do you choose?')
-            colorChoice = ''
-            while colorChoice not in ['red','blue','yellow','green']:
-                colorChoice = input('Pick one of red, blue, yellow, or green: ')
-        else:  # computer player picks at random
-            colorChoice = random.choice(['red','blue','yellow','green'])
-        pile.set_wild_color(colorChoice)
-    # go to the first player
-    currentPlayerNum = (currentPlayerNum + direction) % numPlayers
-    # play the game
-    while True:
-        # print the game status
-        print('-------')
-        for player in playerList:
-            print(player)
-        print('-------')
-        # take a turn
-        action = playerList[currentPlayerNum].take_turn(deck,pile)
-        # check for a winner
-        if playerList[currentPlayerNum].has_won():
-            print(playerList[currentPlayerNum].get_name()+" wins!")
-            print("Thanks for playing!")
-            break
-        # perform action, if any
-        if action == 'skip':
-            currentPlayerNum = (currentPlayerNum + direction) % numPlayers
-            print(playerList[currentPlayerNum].get_name()+" gets skipped!")
-        elif action == 'reverse':
-            print("Reverse direction!")
-            direction *= -1
-        elif action == 'draw two':
-            currentPlayerNum = (currentPlayerNum + direction) % numPlayers
-            print(playerList[currentPlayerNum].get_name()+" must draw 2!")
-            input("Press enter to draw.")
-            for i in range(2):
-                # check if deck is empty -- if so, reset it
-                if deck.is_empty():
-                    deck.reset_deck(pile)
-                # draw a new card from the deck
-                newcard = playerList[currentPlayerNum].draw_card(deck)
-                if playerList[currentPlayerNum].is_human():
-                    print("You drew: "+str(newcard))
-        elif action == 'wild draw four':
-            currentPlayerNum = (currentPlayerNum + direction) % numPlayers
-            print(playerList[currentPlayerNum].get_name()+" must draw 4!")
-            input("Press enter to draw.")
-            for i in range(4):
-                # check if deck is empty -- if so, reset it
-                if deck.is_empty():
-                    deck.reset_deck(pile)
-                # draw a new card from the deck
-                newcard = playerList[currentPlayerNum].draw_card(deck)
-                if playerList[currentPlayerNum].is_human():
-                    print("You drew: "+str(newcard))
-        # go to the next player
-        currentPlayerNum = (currentPlayerNum + direction) % numPlayers
+wildR=0
+werthebest='k'
+while werthebest!='':
+  clear()
+  printt("Welcome to Uno!\n")
+  print(underline("New features:")+"\n\033[38;5;25mActually nice feature:\033[0m\n\tSay '\033[38;5;12mdisable\033[0m' (right now) to disable wait times\n\t\033[38;5;5mYou will be prompted to hit enter after each block of dialogue!\033[0m\n\tOnly buttons, no longer typing the card name.\n\nsay 's' i dare you\n")
+  werthebest=input("Hit enter to continue (Say 'rules' for the rules of Uno!)\n>").lower().strip()
+  clear()
+  if werthebest==chr(104):
+    printt(":)")
+    time.sleep(1)
+    wildR+=1
+    printt("\033[38;5;13mWild cards guaranteed: "+str(wildR if wildR<=5 else 5)+"\033[0m")
+    anykey(True)
+  if werthebest=='s':
+    shop()
+  if werthebest in ['d','disable']:
+    print("\033[38;5;46mWaiting disabled!\033[0m\nAfter each turn, you will be prompted to hit enter!\n(like what is about to happen)")
+    time.sleep(1)
+    print("(Slow printing is also disabled!)")
+    nowait=True
+    anykey()
+  if werthebest in ['rule','rules']:
+   printt(underline("Here are the rules of Uno:"))
+   for i in ["The objective of the game is to get rid of all of your cards","There are many card types, these are:","A Red, Green, Yellow, and Blue version of 0 through 9","A Red, Green, Yellow, and Blue versions of Reverse Cards, Skip Cards, and +2 cards","Wild Cards, and +4 cards","At the beginning of the game, you will get 5 random cards, and there will be one starting card in play","To play a card ,it must 1) Have a matching color to the card in play, 2) Have a matching number to the card in play3) Be a Wild Card or a +4 Card, or the card in play is one of these","The multi-colored 0-9 cards have no special atributes, but the other cards do"]:
+     printt(i)
+   time.sleep(2)
+   print("(Hit enter to learn more, n to just leave)")
+   tryyour=input()
+   while tryyour.lower() not in ['no','n']:
+     clear()
+     tryyour=input("What would you like to learn more about?\n1) Wild Cards\n2) +4 cards\n3) Reverse Cards and Skip Cards\n4) +2 Cards\n(Say n to exit)")
+     clear()
+     if tryyour=="1":
+       printt(bold+"Wild Cards:"+r)
+       printt("Wild Cards are cards that can be placed on any card")
+       printt("Once placed, the person who placed it can pick what color the next card must be, excluding other wild cards or +4 cards")
+     if tryyour=="2":
+       printt(bold+"+4 Cards:"+r)
+       printt("+4 Cards are used to give the opponent +4 cards!")
+       printt("This can give you a tremendous lead, and +4 Cards can be placed on any card type!")
+     if tryyour=="3":
+       printt(bold+"Reverse Cards and Skip Cards"+r)
+       printt("Reverse Cards are semi useless in 2 player mode...")
+       printt("Reverse Cards are used to switch the order of how the turns go")
+       printt("Skip Cards are used to skip the opponent's turn!")
+       printt("Skip Cards basically give you another turn")
+     if tryyour=="4":
+       printt(bold+"+2 Cards"+r)
+       printt("+2 Cards give your opponent +2 cards!")
+       printt("This will give you a slight advantage!")
+     anykey()
+       
+cards=['\033[31m'+'Red 1','\033[31m'+'Red 2','\033[31m'+'Red 3','\033[31m'+'Red 4','\033[31m'+'Red 5','\033[31m'+'Red 6','\033[31m'+'Red 7','\033[31m'+'Red 8','\033[31m'+'Red 9','\033[34m'+'Blue 1','\033[34m'+'Blue 2','\033[34m'+'Blue 3','\033[34m'+'Blue 4','\033[34m'+'Blue 5','\033[34m'+'Blue 6','\033[34m'+'Blue 7','\033[34m'+'Blue 8','\033[34m'+'Blue 9','\033[32m'+'Green 1','\033[32m'+'Green 2','\033[32m'+'Green 3','\033[32m'+'Green 4','\033[32m'+'Green 5','\033[32m'+'Green 6','\033[32m'+'Green 7','\033[32m'+'Green 8','\033[32m'+'Green 9','\033[33m'+'Yellow 1','\033[33m'+'Yellow 2','\033[33m'+'Yellow 3','\033[33m'+'Yellow 4','\033[33m'+'Yellow 5','\033[33m'+'Yellow 6','\033[33m'+'Yellow 7','\033[33m'+'Yellow 8','\033[33m'+'Yellow 9','\033[31m'+'Red +2 Card','\033[33m'+'Yellow +2 Card','\033[32m'+'Green +2 Card','\033[34m'+'Blue +2 Card','\033[31m'+'Red Skip Card','\033[33m'+'Yellow Skip Card','\033[32m'+'Green Skip Card','\033[34m'+'Blue Skip Card','\033[31m'+'Red Reverse Card','\033[32m'+'Green Reverse Card','\033[33m'+'Yellow Reverse Card','\033[31m'+'Red 1','\033[31m'+'Red 2','\033[31m'+'Red 3','\033[31m'+'Red 4','\033[31m'+'Red 5','\033[31m'+'Red 6','\033[31m'+'Red 7','\033[31m'+'Red 8','\033[31m'+'Red 9','\033[34m'+'Blue 1','\033[34m'+'Blue 2','\033[34m'+'Blue 3','\033[34m'+'Blue 4','\033[34m'+'Blue 5','\033[34m'+'Blue 6','\033[34m'+'Blue 7','\033[34m'+'Blue 8','\033[34m'+'Blue 9','\033[32m'+'Green 1','\033[32m'+'Green 2','\033[32m'+'Green 3','\033[32m'+'Green 4','\033[32m'+'Green 5','\033[32m'+'Green 6','\033[32m'+'Green 7','\033[32m'+'Green 8','\033[32m'+'Green 9','\033[33m'+'Yellow 1','\033[33m'+'Yellow 2','\033[33m'+'Yellow 3','\033[33m'+'Yellow 4','\033[33m'+'Yellow 5','\033[33m'+'Yellow 6','\033[33m'+'Yellow 7','\033[33m'+'Yellow 8','\033[33m'+'Yellow 9','\033[31m'+"Red 0",'\033[33m'+'Yellow 0','\033[34m'+'Blue 0','\033[32m'+'Green 0','\033[31m'+'Red 1','\033[31m'+'Red 2','\033[31m'+'Red 3','\033[31m'+'Red 4','\033[31m'+'Red 5','\033[31m'+'Red 6','\033[31m'+'Red 7','\033[31m'+'Red 8','\033[31m'+'Red 9','\033[34m'+'Blue 1','\033[34m'+'Blue 2','\033[34m'+'Blue 3','\033[34m'+'Blue 4','\033[34m'+'Blue 5','\033[34m'+'Blue 6','\033[34m'+'Blue 7','\033[34m'+'Blue 8','\033[34m'+'Blue 9','\033[32m'+'Green 1','\033[32m'+'Green 2','\033[32m'+'Green 3','\033[32m'+'Green 4','\033[32m'+'Green 5','\033[32m'+'Green 6','\033[32m'+'Green 7','\033[32m'+'Green 8','\033[32m'+'Green 9','\033[33m'+'Yellow 1','\033[33m'+'Yellow 2','\033[33m'+'Yellow 3','\033[33m'+'Yellow 4','\033[33m'+'Yellow 5','\033[33m'+'Yellow 6','\033[33m'+'Yellow 7','\033[33m'+'Yellow 8','\033[33m'+'Yellow 9','\033[31m'+"Red 0",'\033[33m'+'Yellow 0','\033[34m'+'Blue 0','\033[32m'+'Green 0','+4 Card','+4 Card','+4 Card',"Wild Card","Wild Card",'\033[31m'+'Red +2 Card','\033[33m'+'Yellow +2 Card','\033[32m'+'Green +2 Card','\033[34m'+'Blue +2 Card','\033[31m'+'Red Skip Card','\033[33m'+'Yellow Skip Card','\033[32m'+'Green Skip Card','\033[34m'+'Blue Skip Card','\033[31m'+'Red Reverse Card','\033[32m'+'Green Reverse Card','\033[33m'+'Yellow Reverse Card']
 
 
-play_uno(3)
+
+def setup():
+ global turn,wildz,skipp,skipp2,deck,deck2,wildR
+ turn='P'
+ wildz,skipp,skipp2=False,False,False
+ deck,deck2=[],[]
+
+ for i in range(5):
+   deck.append(random.choice(cards) if wildR<=0 else "Wild Card")
+   wildR-=1
+ for i in range(5):
+   deck2.append(random.choice(cards))
+setup()
+theufn=os.environ.get('USER')
+if werthebest.lower()==theufn:
+ printt("Ez money")
+ anykey(True)
+ deck.append("Wild Card")
+ deck.append("+4 Card")
+def cardsr():
+ for ind,f in enumerate(deck):
+   print(str(ind+1)+") "+f,end=r)
+   if ind%5!=4 and ind!=len(deck)-1:
+     print(", ",end="")
+   if ind%5==4 and ind!=len(deck)-1:
+     print('')
+def compcards():
+ for f in deck2:
+   print(f,end=r)
+   if deck2.index(f)!=len(deck2)-1:
+     print(",",end="")
+ print("")
+graph=[]
+gooddict={
+1:one,2:two,3:three,4:four,5:five,6:six,7:seven,8:eight,9:nine,0:zero,"+2":plus2,"S":skip,"R":reverse
+}
+def cardconvert(a1):
+ if '\x1b[31m' in a1 or '\x1b[32m' in a1 or '\x1b[33m' in a1 or '\x1b[34m' in a1:
+   a1=a1[5:]
+ if dicts[a1][1]=="/":
+   if dicts[a1][2]=="W":
+     return wild+r
+   if dicts[a1][2]=="+4":
+     return plus4+r
+ return "\033[3"+("1m" if dicts[a1][0]=="Red" else "4m" if dicts[a1][0]=="Blue" else "3m" if dicts[a1][0]=="Yellow" else "2m")+gooddict[dicts[a1][1]]+r
+for w in deck:
+ z=cardconvert(w)
+ graph.append(z)
+def cardsg():
+ for i in graph:
+   print(i,end='')
+   print('\n'+deck[graph.index(i)])
+clear()
+start=random.choice(cards)
+sumoo=['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+theeee=""
+def judge(theone,thedeck):
+ global theeee,start2
+ if theone!='/':
+   deck1=[]
+   deck66=[]
+   start2=normconvert(start)
+   theone=normconvert(theone)
+   for a2 in thedeck:
+     a2=normconvert(a2)
+     deck1.append(a2)
+   for thhh in deck1:
+     deck66.append(thhh.lower())
+   theonez1=theone
+   if theone.isdigit()==False and theone.isspace()==False:
+     theonez1=theone.lower()
+   if theonez1 in deck66 or theone in sumoo[:len(deck1)]:
+       if theone.isdigit()==False:
+         theone=deck1[deck66.index(theonez1)]
+       if theone.isdigit():
+           theone=deck1[int(theone)-1]
+       else:
+         theeee=theone
+       if dicts[theone][0]==dicts[start2][0] or dicts[theone][1]==dicts[start2][1] or dicts[start2][0]=="All" or dicts[theone][0]=='All':
+         theeee=thedeck[deck1.index(theone)]
+         del thedeck[thedeck.index(theeee)]
+         return True
+       else:
+         print("You cant place that card!")
+         slep(3,'f')
+   else:
+     print("Invalid Card...")
+     slep(3,'f')
+ else:
+   return False
+def celebrate(person):
+ p='s' if person=='Computer' else ''
+ for e in range(5):
+   for i in [1,2,3,4]:
+     print(bold+f"\033[3{i}m{person} win{p}!")
+     time.sleep(.3)
+ time.sleep(2)
+ clear()
+def compturn():
+ zomg=True
+ choose=False
+ iseeu2=""
+ printt("\nThe computer is making its move..")
+ slep(2)
+ global deck,start,dicts,skipp2,wildz,tyforthat2
+ if '+4 Card' in deck2:
+   printt("The opponent placed a +4 card!")
+   start='+4 Card'
+   slep(1)
+   printt("Getting 4 cards...")
+   deck2.remove('+4 Card')
+   for i in range(4):
+     deck.append(random.choice(cards))
+   start="+4 Card"
+   slep(2,'f')
+ elif 'Wild Card' in deck2:
+   wildz=True
+   print("The opponent placed a Wild Card!")
+   slep(1)
+   rety=random.choice(['Red','Yellow','Blue','Green'])
+   printt("The computer decided to make your next card a "+rety+" Card!")
+   dicts['Wild Card'][0]=rety
+   deck2.remove("Wild Card")
+   start="Wild Card"
+   slep(2,'f')
+ else:
+   for iseeu in deck2:
+     iseeu2=normconvert(iseeu)
+     start3=normconvert(start)
+     if zomg==True:
+       if dicts[iseeu2][0]==dicts[start3][0] or dicts[iseeu2][1]==dicts[start3][1] or dicts[start3][0]=="All":
+         printt("The computer placed a "+iseeu+r)
+         start=iseeu
+         slep(2)
+         deck2.remove(iseeu)
+         zomg=False
+         choose=True
+         if "+2" in iseeu2:
+           printt("The computer played a +2 card! Taking +2 cards...")
+           for i in range(2):
+             slep(1)
+             deck.append(random.choice(cards)) 
+         elif "Reverse" in iseeu2:
+           printt("The computer switched the order of which the turns go!")
+           printt("This doesnt really help with 2 players...")
+           slep(3)
+         elif "Skip" in iseeu2:
+           printt("Skipping your turn...")
+           skipp2=True
+           slep(2)
+         anykey() 
+   zomg=True
+   if choose==False:
+     printt("The computer didnt have a card!")
+     slep(1)
+     printt("Taking a card...")
+     slep(.5)
+     print('\a',end='')
+     deck2.append(random.choice(cards))
+     slep(1.5,'f')
+   else:
+     choose=False
+ clear()
+ if len(deck2)==1:
+   print(bold+'\033[31m'+underline("Computer says:Uno!"))
+ if len(deck2)==0 or deck2==[]:
+   celebrate("Computer")
+   clear()
+   tyforthat2=False
+def gamething():
+ global dicts,start,theonez,turn,skipp,deck,deck2,theeee,wildz,skipp2,tyforthat2,tyforthat
+ tyforthat=True
+ while tyforthat:
+   startcard = cardconvert(start)
+   start69=normconvert(start)
+   print(r+random.choice(['\033[38;5;'+str(random.randint(1,88))+'m'])+"Card in play:"+r)
+   print(startcard+'\n'+start+"("+dicts[start69][0]+")"+r)
+   dicts['Wild Card'][0]=="All"
+   if turn=="P":
+     print(bold+'\nWhich card would you like to place?\n(Say n if you dont have a move/want to pick up a card)\n'+r+underline("Your cards: (SAY THE NUMBER!!)"))
+     cardsr()
+     print('\n'+underline("Computer's cards:"))
+     for oranumberoraletter in range(len(deck2)):
+       print("?",end="  ")
+     print("\n(Say the position of the card(Ex: "+deck[0]+r+" = 1"+") or the card name)"+r)
+     theonez=input()
+     if theonez.lower() in ['n','no','nope']:
+       z=random.choice(cards)
+       printt("You drew a "+z+r)
+       slep(2)
+       deck.append(z)
+       theeee=start
+       theonez='/'
+       turn="C"
+       anykey()
+     f=judge(theonez,deck)
+     if f==True:
+       if "Skip" in theeee:
+         printt("You played a Skip Card! Skipping the computers turn!")
+         slep(1)
+         skipp=True
+       elif "+4" in theeee:
+         printt("You played a "+underline("+4 card")+"!")
+         printt("Giving the computer +4 cards..")
+         for i in range(4):
+           print("\a",end="")
+           slep(.5)
+           deck2.append(random.choice(cards))
+         slep(1)
+         print("")
+       elif 'Wild' in theeee:
+         wildz=True
+         while True:
+           printt("You played a "+underline("Wild Card")+"!")
+           slep(1)
+           printt("What color do you want the computer to next play?\n(Red,Yellow,Blue,Green)")
+           coor=input()
+           if coor.lower() in ['red','yellow','green','blue']:
+             coor=coor.lower()
+             coor=coor[0].upper()+coor[1:]
+             printt("The color is now "+coor)
+             dicts["Wild Card"][0]=coor
+             slep(2)
+             break
+           else:
+             print("You have to pick a color!")
+             slep(3)
+             clear()
+       elif "+2" in theeee:
+         printt("You played a +2 card! Giving the computer +2 cards...")
+         for i in range(2):
+           print("\a",end="")
+           slep(1)
+           deck2.append(random.choice(cards))
+         slep(1)
+       elif "Reverse" in theeee:
+         printt("You switched the order of which the turns go!")
+         slep(1)
+         printt("This doesnt really help with 2 players...")
+         slep(3)
+       else:
+         printt("You played a "+theeee)
+         slep(2)
+       if len(deck)==1:
+         print(bold+'\033[32m'+underline("You say:Uno!")+r)
+         slep(2)
+       if deck==[] or len(deck)==0:
+         clear()
+         celebrate("You")
+         tyforthat=False
+       start=theeee
+       anykey()
+       if skipp==False:
+         turn='C'
+       else:
+         skipp=False
+       if wildz==False:
+         dicts['Wild Card'][0]="All"
+       else:
+         wildz=False
+
+
+   elif turn=="C":
+     if turn=='C':
+       compturn()
+       if tyforthat2==False:
+         tyforthat2=True
+         tyforthat=False
+       if skipp2==False:
+         turn='P'
+       else:
+         skipp2=False
+         turn='C'
+       if wildz==False:
+         dicts['Wild Card'][0]="All"
+       else:
+         wildz=False
+while True:
+ gamething()
+ yes=['yes','y','ye']
+ no=['no','n']
+ tyforthat=True
+ gging=True
+ while gging:
+   print(r+"Want to play again?")
+   tyfornothing=input()
+   if tyfornothing.lower() in yes:
+     printt('Ok! Lets go into it!')
+     setup()
+     start=random.choice(cards)
+     time.sleep(1)
+     clear()
+     gging=False
+   elif tyfornothing.lower() in no:
+     sys.exit("cya later")
+   else:
+     print("You have to say yes or no!")
+     time.sleep(2)
+     os.system('clear')
